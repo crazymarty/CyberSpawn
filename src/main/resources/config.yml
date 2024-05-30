@@ -1,0 +1,58 @@
+settings:
+  # Enable or disable the plugin.
+  enabled: true
+  # Whether you want to use the legacy color codes or modern color for messages.
+  # Legacy color codes are like &6, &d, &e, etc...
+  # Enabling this will disable HEX / RGB color codes support.
+  # Disabling this will enable HEX / RGB color codes support but will disable the legacy color codes support.
+  legacyColors: true
+  # Spawn teleportation warmup in seconds. Set 0 to disable.
+  # This is how much seconds player will have to wait before they get teleported to spawn.
+  # Default: 3
+  spawnTpWarmup: 3
+  # Should players be allowed to move while warming up to teleport to the spawn?
+  # RECOMMENDED to set it to false.
+  canPlayerMove: false
+  # Whether to teleport new players to the spawn.
+  # RECOMMENDED to set it to true.
+  teleportFirstJoin: true
+  # Should the plugin broadcast a welcome message when a new player joins?
+  # Configure the message in the messages config below.
+  sendFirstJoinMessage: true
+
+
+# Configure plugin messages.
+messages:
+  prefix: "&8[&3SPAWN&8] &7"
+  configReload: "{prefix}Configuration file has been reloaded."
+  pluginDisabled: "{prefix}Plugin is currently disabled. Enabled it in the config and reload the config."
+  firstJoin: "&3Welcome {player}!&7 to &byourserver&7. You are &a#{uniquejoins}&7 player."
+  spawnSet: "{prefix}Spawn location has been set to &b{loc}&7."
+  spawnTp: "{prefix}Teleported to spawn."
+  spawnTpCooldown: "{prefix}Teleporting to spawn in &b{cooldown}&7. Do not move."
+  noPermission: "{prefix}You don't have permission to do that."
+  spawnNotSet: "{prefix}No spawn location available :("
+
+
+# Configure permissions of the plugin.
+permissions:
+  # Permission required to use the /setspawn command.
+  # Default: cyberspawn.setspawn
+  setSpawn: cyberspawn.setspawn
+  # Permission required to use the /spawn command.
+  # Default: cyberspawn.spawn
+  teleportToSpawn: cyberspawn.spawn
+  # Permission required to teleport someone else to the spawn.
+  # Default: cyberspawn.spawn.others
+  teleportOthersToSpawn: cyberspawn.spawn.others
+  # Permission required to bypass the /spawn warmup cooldown.
+  # Default: cyberspawn.bypass.warmup
+  bypassWarmup: cyberspawn.bypass.warmup
+  # Permission required for reloading the config.
+  reloadPlugin: cyberspawn.reload
+
+
+database:
+  # Either of the database should be enabled or plugin won't work properly.
+  SQLite:
+    enabled: true
