@@ -4,7 +4,6 @@ package dev.crazymarty.cyberspawn.config;
 import lombok.Getter;
 
 import java.io.IOException;
-import java.util.Set;
 
 @Getter
 public class MainConfig extends ConfigManager {
@@ -29,14 +28,20 @@ public class MainConfig extends ConfigManager {
                            boolean legacyColors, 
                            int spawnTpWarmup, 
                            boolean canPlayerMove, 
-                           boolean teleportFirstJoin, 
-                           boolean sendFirstJoinMessage) {
+                           boolean teleportFirstJoin,
+                           boolean teleportToFirstSpawn,
+                           boolean sendJoinLeaveMessage,
+                           boolean sendFirstJoinMessage,
+                           boolean teleportToSpawnOnDeath,
+                           boolean teleportToBedIfAvailable) {
     }
 
     // Messages config
     public record Messages(String prefix,
                            String configReload, 
-                           String pluginDisabled, 
+                           String pluginDisabled,
+                           String playerJoin,
+                           String playerLeave,
                            String firstJoin, 
                            String spawnSet, 
                            String spawnTP, 
@@ -59,27 +64,33 @@ public class MainConfig extends ConfigManager {
         int spawnTpWarmup = this.getInt("settings.spawnTpWarmup");
         boolean canPlayerMove = this.getBoolean("settings.canPlayerMove");
         boolean teleportFirstJoin = this.getBoolean("settings.teleportFirstJoin");
+        boolean teleportToFirstSpawn = this.getBoolean("settings.teleportToFirstSpawn");
+        boolean sendJoinLeaveMessage = this.getBoolean("settings.sendJoinLeaveMessage");
         boolean sendFirstJoinMessage = this.getBoolean("settings.sendFirstJoinMessage");
-        settings = new Settings(enabled,legacyColors,spawnTpWarmup,canPlayerMove,teleportFirstJoin,sendFirstJoinMessage);
+        boolean teleportToSpawnOnDeath = this.getBoolean("settings.teleportToSpawnOnDeath");
+        boolean teleportToBedIfAvailable = this.getBoolean("settings.teleportToBedIfAvailable");
+        settings = new Settings(enabled,legacyColors,spawnTpWarmup,canPlayerMove,teleportFirstJoin,teleportToFirstSpawn, sendJoinLeaveMessage, sendFirstJoinMessage, teleportToSpawnOnDeath, teleportToBedIfAvailable);
 
         String prefix = this.getString("messages.prefix");
         String configReload = this.getString("messages.configReload");
         String pluginDisabled = this.getString("messages.pluginDisabled");
+        String playerJoin = this.getString("messages.playerJoin");
+        String playerLeave = this.getString("messages.playerLeave");
         String firstJoin = this.getString("messages.firstJoin");
         String spawnSet = this.getString("messages.spawnSet");
         String spawnTp = this.getString("messages.spawnTp");
         String spawnTpCoolDown = this.getString("messages.spawnTpCooldown");
         String noPermission = this.getString("messages.noPermission");
         String spawnNotSet = this.getString("messages.spawnNotSet");
-        messages = new Messages(prefix,configReload,pluginDisabled,firstJoin,spawnSet,spawnTp,spawnTpCoolDown,noPermission,spawnNotSet);
+        messages = new Messages(prefix,configReload,pluginDisabled,playerJoin, playerLeave, firstJoin,spawnSet,spawnTp,spawnTpCoolDown,noPermission,spawnNotSet);
 
         // Permission config
 
-        String setSpawn = this.getString("messages.setSpawn");
-        String teleportToSpawn = this.getString("messages.teleportToSpawn");
-        String teleportOthersToSpawn = this.getString("messages.teleportOthersToSpawn");
-        String bypassWarmup = this.getString("messages.bypassWarmup");
-        String reloadPlugin = this.getString("messages.reloadPlugin");
+        String setSpawn = this.getString("permissions.setSpawn");
+        String teleportToSpawn = this.getString("permissions.teleportToSpawn");
+        String teleportOthersToSpawn = this.getString("permissions.teleportOthersToSpawn");
+        String bypassWarmup = this.getString("permissions.bypassWarmup");
+        String reloadPlugin = this.getString("permissions.reloadPlugin");
         permissions = new Permissions(setSpawn,teleportToSpawn,teleportOthersToSpawn,bypassWarmup,reloadPlugin);
     }
 

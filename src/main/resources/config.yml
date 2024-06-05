@@ -17,9 +17,21 @@ settings:
   # Whether to teleport new players to the spawn.
   # RECOMMENDED to set it to true.
   teleportFirstJoin: true
+  # Whether to teleport new players to the first spawn.
+  # If teleportFirstJoin, the above option is false then this will have no effect.
+  # NOTE: You must set first spawn point using /setfirstspawn or new players will spawn at the default spawn.
+  # RECOMMENDED to set it to true
+  teleportToFirstSpawn: true
+  # Should the plugin broadcast a custom player join and leave message?
+  # Configure the message in the messages config below.
+  sendJoinLeaveMessage: true
   # Should the plugin broadcast a welcome message when a new player joins?
   # Configure the message in the messages config below.
   sendFirstJoinMessage: true
+  # Whether to teleport players to spawn after they die
+  teleportToSpawnOnDeath: true
+  # Whether to teleport players to their bed location after they die if bed spawn is set.
+  teleportToBedIfAvailable: true
 
 
 # Configure plugin messages.
@@ -27,8 +39,11 @@ messages:
   prefix: "&8[&3SPAWN&8] &7"
   configReload: "{prefix}Configuration file has been reloaded."
   pluginDisabled: "{prefix}Plugin is currently disabled. Enabled it in the config and reload the config."
+  playerJoin: "&8[&a+&8] &3{player} &7has joined the server."
+  playerLeave: "&8[&c-&8] &3{player} &7has left the server."
   firstJoin: "&3Welcome {player}!&7 to &byourserver&7. You are &a#{uniquejoins}&7 player."
-  spawnSet: "{prefix}Spawn location has been set to &b{loc}&7."
+  firstSpawnSet: "{prefix}First spawn location has been set at &b{loc}&7."
+  spawnSet: "{prefix}Spawn location has been set at &b{loc}&7."
   spawnTp: "{prefix}Teleported to spawn."
   spawnTpCooldown: "{prefix}Teleporting to spawn in &b{cooldown}&7. Do not move."
   noPermission: "{prefix}You don't have permission to do that."

@@ -26,4 +26,12 @@ public class TextFormatter {
             sender.sendMessage(translateModernColorCode(string));
         }
     }
+
+    public static Component returnMessage(CommandSender sender, String string) {
+        if (CyberSpawn.getLegacyColor()) {
+            return translateLegacyColor(string);
+        } else {
+            return translateModernColorCode(string);
+        }
+    }
 }

@@ -11,11 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 import static dev.crazymarty.cyberspawn.utils.TextFormatter.sendMessage;
 
-public class SetSpawn implements CommandExecutor {
+public class SetFirstSpawn implements CommandExecutor {
 
     private final CyberSpawn instance;
 
-    public SetSpawn(CyberSpawn cyberSpawn) {
+    public SetFirstSpawn(CyberSpawn cyberSpawn) {
         this.instance = cyberSpawn;
     }
 
@@ -28,7 +28,7 @@ public class SetSpawn implements CommandExecutor {
         String message;
         if (!MainConfig.settings.enabled()) {
             message = MainConfig.messages.pluginDisabled();
-            sendMessage(sender, message);
+            sendMessage(player, message);
             return true;
         }
         String setSpawnPerm = MainConfig.permissions.setSpawn();

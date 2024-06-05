@@ -1,10 +1,12 @@
 package dev.crazymarty.cyberspawn;
 
 import dev.crazymarty.cyberspawn.commands.Main;
+import dev.crazymarty.cyberspawn.commands.SetFirstSpawn;
 import dev.crazymarty.cyberspawn.commands.SetSpawn;
 import dev.crazymarty.cyberspawn.commands.Spawn;
 import dev.crazymarty.cyberspawn.config.MainConfig;
 import dev.crazymarty.cyberspawn.database.SQLiteData;
+import dev.crazymarty.cyberspawn.events.PlayerEventHandler;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +35,7 @@ public final class CyberSpawn extends JavaPlugin {
         }
         connectPluginData();
         registerCommands();
+        registerEvents();
     }
 
     @Override
@@ -41,9 +44,14 @@ public final class CyberSpawn extends JavaPlugin {
     }
 
     private void registerCommands() {
+        Objects.requireNonNull(getCommand("setfirstspawn")).setExecutor(new SetFirstSpawn(this));
         Objects.requireNonNull(getCommand("setspawn")).setExecutor(new SetSpawn(this));
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new Spawn(this));
         Objects.requireNonNull(getCommand("cyberspawn")).setExecutor(new Main(this));
+    }
+
+    private void registerEvents() {
+        getServer().getPluginManager().registerEvents(new PlayerEventHandler(this), this);
     }
 
     private void connectPluginData() {
@@ -59,6 +67,14 @@ public final class CyberSpawn extends JavaPlugin {
     }
 
     public Location getSpawnLocation() {
+        return pluginData.getSpawnLocation();
+    }
+
+    public Location setFirstSpawnLocation(Location location) {
+        return pluginData.setSpawnLocation(location);
+    }
+
+    public Location getFirstSpawnLocation() {
         return pluginData.getSpawnLocation();
     }
 

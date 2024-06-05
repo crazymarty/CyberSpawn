@@ -8,6 +8,8 @@ commands:
   cyberspawn:
     aliases: ['cspawn']
     description: Main command for the CyberSpawn plugin
+  setfirstspawn:
+    description: Set first spawn point of the server.
   setspawn:
     description: Set spawn point of the server.
   spawn:
