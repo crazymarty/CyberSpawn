@@ -22,7 +22,6 @@ public final class CyberSpawn extends JavaPlugin {
     private SQLiteData pluginData;
 
 
-    // Plugin startup logic
     @Override
     public void onEnable() {
         instance = this;
@@ -36,13 +35,11 @@ public final class CyberSpawn extends JavaPlugin {
         registerCommands();
     }
 
-    // Plugin shutdown logic
     @Override
     public void onDisable() {
         disconnectPluginData();
     }
 
-    // Register commands
     private void registerCommands() {
         Objects.requireNonNull(getCommand("setspawn")).setExecutor(new SetSpawn(this));
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new Spawn(this));
@@ -66,7 +63,6 @@ public final class CyberSpawn extends JavaPlugin {
     }
 
     private void loadConfig() throws IOException {
-        // saveDefaultConfig();
         mainConfig = new MainConfig();
         legacyColor = getConfig().getBoolean("settings.legacyColors");
     }
