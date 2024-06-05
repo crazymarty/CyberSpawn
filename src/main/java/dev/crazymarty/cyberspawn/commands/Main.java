@@ -17,11 +17,9 @@ import static dev.crazymarty.cyberspawn.utils.TextFormatter.sendMessage;
 public class Main implements CommandExecutor {
 
     private final CyberSpawn instance;
-//    private final Configuration config;
 
     public Main(CyberSpawn cyberSpawn) {
-        this.instance = cyberSpawn.getInstance();
-//        this.config = cyberSpawn.getConfig();
+        this.instance = cyberSpawn;
     }
 
     @Override
@@ -30,22 +28,14 @@ public class Main implements CommandExecutor {
             sender.sendMessage("Help message");
             return true;
         }
-        if (args[0].equalsIgnoreCase("reload")) {
-            String reloadPerms = MainConfig.permissions.reloadPlugin; // .getString("permission.reloadPlugin");
-            if (!sender.hasPermission(reloadPerms)) {
-                String prefix = MainConfig.messages.prefix; // config.getString("messages.prefix");
-                String noPerm = MainConfig.messages.noPermission; // config.getString("messages.noPermission");
-                noPerm = noPerm.replace("{prefix}", prefix);
-                sendMessage(sender, noPerm);
-                return true;
-            }
-            instance.saveDefaultConfig();
-            String configReload = MainConfig.messages.configReload; //config.getString("messages.configReload");
-            String prefix = MainConfig.messages.prefix; // config.getString("messages.prefix");
-            configReload = configReload.replace("{prefix}", prefix);
-            sendMessage(sender, configReload);
-            return true;
-        }
+        if (!args[0].equalsIgnoreCase("reload")) return false;
+        String message;
+        if (!sender.hasPermission(MainConfig.permissions.reloadPlugin())) {
+            message = MainConfig.messages.noPermission();
+        }else message = MainConfig.messages.configReload();
+        if (message.contains("{prefix}"))
+            message = message.replace("{prefix}",MainConfig.messages.prefix());
+        sendMessage(sender, message);
         return true;
     }
 }

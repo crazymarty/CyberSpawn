@@ -10,45 +10,36 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 
-import static dev.crazymarty.cyberspawn.commands.SetSpawn.spawnLocation;
 import static dev.crazymarty.cyberspawn.utils.TextFormatter.sendMessage;
 
 public class Spawn implements CommandExecutor {
 
     private final CyberSpawn instance;
-//    private final MainConfig config;
 
     public Spawn(CyberSpawn cyberSpawn) {
-        this.instance = cyberSpawn.getInstance();
-//        this.config = cyberSpawn.getMainConfig();
+        this.instance = cyberSpawn;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("[SPAWN] This command can only be executed by players.");
             return true;
         }
-        Player player = (Player) sender;
-        String spawnTpPerm = MainConfig.permissions.teleportToSpawn;; // .getString("permissions.teleportToSpawn");
-        if (!player.hasPermission(spawnTpPerm)) {
-            String prefix = MainConfig.messages.prefix; //config.getString("messages.prefix");
-            String noPerm = MainConfig.messages.noPermission; // config.getString("messages.noPermission");
-            noPerm = noPerm.replace("{prefix}", prefix);
-            sendMessage(player, noPerm);
-            return true;
+        Location spawnLocation = instance.getSpawnLocation();
+        String message;
+        if (!player.hasPermission(MainConfig.permissions.teleportToSpawn())) {
+            message = MainConfig.messages.noPermission();
         }
         if (spawnLocation == null) {
-            String prefix = MainConfig.messages.prefix; // .getString("messages.prefix");
-            String spawnNotSet = MainConfig.messages.spawnNotSet; // config.getString("messages.spawnNotSet");
-            spawnNotSet = spawnNotSet.replace("{prefix}", prefix);
-            sendMessage(player, spawnNotSet);
-            return true;
+            message = MainConfig.messages.spawnSet();
+        }else {
+            message = MainConfig.messages.spawnTP();
+            player.teleport(spawnLocation);
         }
-        Location spawnLocation = instance.getSpawnLocation();
-        player.teleport(spawnLocation);
-
-
+        if (message.contains("{prefix}"))
+            message = message.replace("{prefix}", MainConfig.messages.prefix());
+        sendMessage(sender, message);
         return true;
     }
 }
