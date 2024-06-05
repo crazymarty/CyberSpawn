@@ -1,6 +1,6 @@
 package dev.crazymarty.cyberspawn.utils;
 
-import dev.crazymarty.cyberspawn.Core;
+import dev.crazymarty.cyberspawn.CyberSpawn;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -20,7 +20,7 @@ public class TextFormatter {
 
 
     public static void sendMessage(CommandSender sender, String string) {
-        if (Core.getLegacyColor()) {
+        if (CyberSpawn.getLegacyColor()) {
             sender.sendMessage(translateLegacyColor(string));
         } else {
             sender.sendMessage(translateModernColorCode(string));

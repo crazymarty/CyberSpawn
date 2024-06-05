@@ -1,13 +1,14 @@
 name: CyberSpawn
 version: '${project.version}'
-main: dev.crazymarty.cyberspawn.Core
+main: dev.crazymarty.cyberspawn.CyberSpawn
 api-version: '1.20'
 authors: [crazymarty]
 description: A modern and simple spawn plugin.
 commands:
+  cyberspawn:
+    aliases: ['cspawn']
+    description: Main command for the CyberSpawn plugin
   setspawn:
     description: Set spawn point of the server.
   spawn:
     description: Teleport to the spawn point.
-  reload:
-    description: Reload the configuration of plugin.

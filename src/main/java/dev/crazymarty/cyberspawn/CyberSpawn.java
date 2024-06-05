@@ -1,26 +1,37 @@
 package dev.crazymarty.cyberspawn;
 
-import dev.crazymarty.cyberspawn.commands.Reload;
+import dev.crazymarty.cyberspawn.commands.Main;
 import dev.crazymarty.cyberspawn.commands.SetSpawn;
 import dev.crazymarty.cyberspawn.commands.Spawn;
+import dev.crazymarty.cyberspawn.config.MainConfig;
 import dev.crazymarty.cyberspawn.database.SQLiteData;
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.Objects;
 
-public final class Core extends JavaPlugin {
+public final class CyberSpawn extends JavaPlugin {
 
-    private static Core instance;
+    @Getter
+    private static CyberSpawn instance;
     private static boolean legacyColor;
+    @Getter
+    private MainConfig mainConfig;
     private SQLiteData pluginData;
+
 
     // Plugin startup logic
     @Override
     public void onEnable() {
         instance = this;
 
-        loadConfig();
+        try {
+            loadConfig();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         connectPluginData();
         registerCommands();
     }
@@ -35,7 +46,7 @@ public final class Core extends JavaPlugin {
     private void registerCommands() {
         Objects.requireNonNull(getCommand("setspawn")).setExecutor(new SetSpawn(this));
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new Spawn(this));
-        Objects.requireNonNull(getCommand("reload")).setExecutor(new Reload(this));
+        Objects.requireNonNull(getCommand("cyberspawn")).setExecutor(new Main(this));
     }
 
     private void connectPluginData() {
@@ -54,11 +65,12 @@ public final class Core extends JavaPlugin {
         return pluginData.getSpawnLocation();
     }
 
-    private void loadConfig() {
-        saveDefaultConfig();
+    private void loadConfig() throws IOException {
+        // saveDefaultConfig();
+        mainConfig = new MainConfig();
         legacyColor = getConfig().getBoolean("settings.legacyColors");
     }
 
-    public Core getInstance() {return instance;}
+
     public static boolean getLegacyColor() {return legacyColor;}
 }

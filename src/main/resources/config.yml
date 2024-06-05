@@ -1,5 +1,6 @@
 settings:
   # Enable or disable the plugin.
+  debugMode: false
   enabled: true
   # Whether you want to use the legacy color codes or modern color for messages.
   # Legacy color codes are like &6, &d, &e, etc...
@@ -32,6 +33,10 @@ messages:
   spawnTpCooldown: "{prefix}Teleporting to spawn in &b{cooldown}&7. Do not move."
   noPermission: "{prefix}You don't have permission to do that."
   spawnNotSet: "{prefix}No spawn location available :("
+  helpPage:
+    header: "&8&m&l------------&r &3CyberSpawn &bHelp &8&m&l------------"
+    cmdList: "&3• &8/&3{command} &b{subcommand} &8- &7{description}"
+    footer: "&8&m&l------------&r &3CyberSpawn &bHelp &8&m&l------------"
 
 
 # Configure permissions of the plugin.
@@ -51,7 +56,7 @@ permissions:
   # Permission required for reloading the config.
   reloadPlugin: cyberspawn.reload
 
-
+# Does nothing at the moment default option is SQLite only.
 database:
   # Either of the database should be enabled or plugin won't work properly.
   SQLite:

@@ -1,11 +1,11 @@
 package dev.crazymarty.cyberspawn.commands;
 
-import dev.crazymarty.cyberspawn.Core;
+import dev.crazymarty.cyberspawn.CyberSpawn;
+import dev.crazymarty.cyberspawn.config.MainConfig;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,12 +15,12 @@ import static dev.crazymarty.cyberspawn.utils.TextFormatter.sendMessage;
 
 public class Spawn implements CommandExecutor {
 
-    private final Core instance;
-    private final Configuration config;
+    private final CyberSpawn instance;
+//    private final MainConfig config;
 
-    public Spawn(Core core) {
-        this.instance = core.getInstance();
-        this.config = core.getConfig();
+    public Spawn(CyberSpawn cyberSpawn) {
+        this.instance = cyberSpawn.getInstance();
+//        this.config = cyberSpawn.getMainConfig();
     }
 
     @Override
@@ -30,17 +30,17 @@ public class Spawn implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        String spawnTpPerm = config.getString("permissions.teleportToSpawn");
+        String spawnTpPerm = MainConfig.permissions.teleportToSpawn;; // .getString("permissions.teleportToSpawn");
         if (!player.hasPermission(spawnTpPerm)) {
-            String prefix = config.getString("messages.prefix");
-            String noPerm = config.getString("messages.noPermission");
+            String prefix = MainConfig.messages.prefix; //config.getString("messages.prefix");
+            String noPerm = MainConfig.messages.noPermission; // config.getString("messages.noPermission");
             noPerm = noPerm.replace("{prefix}", prefix);
             sendMessage(player, noPerm);
             return true;
         }
         if (spawnLocation == null) {
-            String prefix = config.getString("messages.prefix");
-            String spawnNotSet = config.getString("messages.spawnNotSet");
+            String prefix = MainConfig.messages.prefix; // .getString("messages.prefix");
+            String spawnNotSet = MainConfig.messages.spawnNotSet; // config.getString("messages.spawnNotSet");
             spawnNotSet = spawnNotSet.replace("{prefix}", prefix);
             sendMessage(player, spawnNotSet);
             return true;
