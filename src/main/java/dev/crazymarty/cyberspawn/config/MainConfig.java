@@ -43,9 +43,11 @@ public class MainConfig extends ConfigManager {
                            String playerJoin,
                            String playerLeave,
                            String firstJoin, 
-                           String spawnSet, 
-                           String spawnTP, 
-                           String spawnTpCoolDown, 
+                           String spawnSet,
+                           String firstSpawnSet,
+                           String spawnTP,
+                           String playerMoved,
+                           String spawnTpWarmupMsg,
                            String noPermission, 
                            String spawnNotSet) {
     }
@@ -77,12 +79,14 @@ public class MainConfig extends ConfigManager {
         String playerJoin = this.getString("messages.playerJoin");
         String playerLeave = this.getString("messages.playerLeave");
         String firstJoin = this.getString("messages.firstJoin");
+        String firstSpawnSet = this.getString("messages.firstSpawnSet");
         String spawnSet = this.getString("messages.spawnSet");
         String spawnTp = this.getString("messages.spawnTp");
-        String spawnTpCoolDown = this.getString("messages.spawnTpCooldown");
+        String playerMoved = this.getString("messages.playerMoved");
+        String spawnTpWarmupMsg = this.getString("messages.spawnTpWarmupMsg");
         String noPermission = this.getString("messages.noPermission");
         String spawnNotSet = this.getString("messages.spawnNotSet");
-        messages = new Messages(prefix,configReload,pluginDisabled,playerJoin, playerLeave, firstJoin,spawnSet,spawnTp,spawnTpCoolDown,noPermission,spawnNotSet);
+        messages = new Messages(prefix,configReload,pluginDisabled,playerJoin, playerLeave, firstJoin,firstSpawnSet,spawnSet,spawnTp,playerMoved,spawnTpWarmupMsg,noPermission,spawnNotSet);
 
         // Permission config
 

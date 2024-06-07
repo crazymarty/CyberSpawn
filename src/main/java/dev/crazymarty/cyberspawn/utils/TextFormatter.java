@@ -18,10 +18,10 @@ public class TextFormatter {
         return MiniMessage.miniMessage().deserialize(string);
     }
 
-
     public static void sendMessage(CommandSender sender, String string) {
         if (CyberSpawn.getLegacyColor()) {
             sender.sendMessage(translateLegacyColor(string));
+//            sender.sendMessage(string);
         } else {
             sender.sendMessage(translateModernColorCode(string));
         }
@@ -30,6 +30,7 @@ public class TextFormatter {
     public static Component returnMessage(CommandSender sender, String string) {
         if (CyberSpawn.getLegacyColor()) {
             return translateLegacyColor(string);
+//            return string;
         } else {
             return translateModernColorCode(string);
         }

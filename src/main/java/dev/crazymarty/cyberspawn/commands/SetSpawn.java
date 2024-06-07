@@ -7,7 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import static dev.crazymarty.cyberspawn.utils.TextFormatter.sendMessage;
 
@@ -20,7 +19,7 @@ public class SetSpawn implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
             sender.sendMessage("[SPAWN] This command is can only be used by players.");
             return true;
@@ -35,8 +34,8 @@ public class SetSpawn implements CommandExecutor {
         if (!player.hasPermission(setSpawnPerm)) {
             message = MainConfig.messages.noPermission();
         }else {
-            Location spawnLocation = instance.setSpawnLocation(player.getLocation());
-            message = MainConfig.messages.spawnSet();
+            Location spawnLocation = instance.setFirstSpawnLocation(player.getLocation());
+            message = MainConfig.messages.firstSpawnSet();
             if (message.contains("{loc}"))
                 message = message.replace("{loc}",
                         Math.round(spawnLocation.getX())  + ", " + Math.round(spawnLocation.getY()) + ", " + Math.round(spawnLocation.getZ()) + ", " + spawnLocation.getWorld().getName());

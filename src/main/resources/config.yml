@@ -45,7 +45,8 @@ messages:
   firstSpawnSet: "{prefix}First spawn location has been set at &b{loc}&7."
   spawnSet: "{prefix}Spawn location has been set at &b{loc}&7."
   spawnTp: "{prefix}Teleported to spawn."
-  spawnTpCooldown: "{prefix}Teleporting to spawn in &b{cooldown}&7. Do not move."
+  playerMoved: "{prefix}You moved. Teleportation has been cancelled."
+  spawnTpWarmupMsg: "{prefix}Teleporting to spawn in &b{warmup}&7. Do not move."
   noPermission: "{prefix}You don't have permission to do that."
   spawnNotSet: "{prefix}No spawn location available :("
   helpPage:
@@ -70,6 +71,10 @@ permissions:
   bypassWarmup: cyberspawn.bypass.warmup
   # Permission required for reloading the config.
   reloadPlugin: cyberspawn.reload
+  # Permission cooldown for the spawn command
+  # x is the amount of time a player will need to wait before they can use spawn command again.
+  # Timer should be in seconds, the timer can be configured in the settings section.
+  spawnCmdCooldown: cyberspawn.cooldown.x
 
 # Does nothing at the moment default option is SQLite only.
 database:
