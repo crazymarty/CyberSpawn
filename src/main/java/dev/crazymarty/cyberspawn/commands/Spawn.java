@@ -7,9 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
-
 
 import static dev.crazymarty.cyberspawn.utils.TextFormatter.sendMessage;
 
@@ -27,50 +25,46 @@ public class Spawn implements CommandExecutor {
             sender.sendMessage("[SPAWN] This command can only be executed by players.");
             return true;
         }
-        Location spawnLocation = instance.getSpawnLocation();
-        String message;
+
         if (!player.hasPermission(MainConfig.permissions.teleportToSpawn())) {
-            message = MainConfig.messages.noPermission();
+            sendMessage(player, MainConfig.messages.noPermission().replace("{prefix}", MainConfig.messages.prefix()));
+            return true;
         }
+
+        Location spawnLocation = instance.getSpawnLocation();
         if (spawnLocation == null) {
-            message = MainConfig.messages.spawnNotSet();
-        }else {
-            int warmupTime = MainConfig.settings.spawnTpWarmup();
-            if (warmupTime != 0) {
-                Location playerLocation = player.getLocation();
-                player.sendMessage(" Here -> " + playerLocation);
-                String msg = MainConfig.messages.spawnTpWarmupMsg();
-                msg = msg.replace("{warmup}", String.valueOf(warmupTime));
-                msg = msg.replace("{prefix}", MainConfig.messages.prefix());
-                sendMessage(player, msg);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (player.getLocation() != playerLocation) {
-                            player.sendMessage(" Here Second -> " + player.getLocation());
-                            String msg = MainConfig.messages.playerMoved();
-                            msg = msg.replace("{prefix}", MainConfig.messages.prefix());
-                            sendMessage(player, msg);
-                            cancel();
-                        } else {
-                            String message = MainConfig.messages.spawnTP();
-                            message = message.replace("{prefix}", MainConfig.messages.prefix());
-                            player.teleport(spawnLocation);
-                            sendMessage(player, message);
-                        }
-                    }
-                }.runTaskLater(instance, 20L * warmupTime);
-            } else {
-                message = MainConfig.messages.spawnTP();
-                message = message.replace("{prefix}", MainConfig.messages.prefix());
-                player.teleport(spawnLocation);
-                sendMessage(player, message);
-            }
+            sendMessage(player, MainConfig.messages.spawnNotSet().replace("{prefix}", MainConfig.messages.prefix()));
+            return true;
         }
-//        if (message.contains("{prefix}"))
-//            message = message.replace("{prefix}", MainConfig.messages.prefix());
-//        sendMessage(sender, message);
+
+        int warmupTime = MainConfig.settings.spawnTpWarmup();
+        if (warmupTime > 0) {
+            Location playerLocation = player.getLocation();
+            String warmupMessage = MainConfig.messages.spawnTpWarmupMsg()
+                    .replace("{warmup}", String.valueOf(warmupTime))
+                    .replace("{prefix}", MainConfig.messages.prefix());
+            sendMessage(player, warmupMessage);
+
+            instance.getServer().getScheduler().runTaskLater(instance, runnable -> {
+                if (player.getLocation().distance(playerLocation) > 0.1) {
+                    String movedMessage = MainConfig.messages.playerMoved()
+                            .replace("{prefix}", MainConfig.messages.prefix());
+                    sendMessage(player, movedMessage);
+                    runnable.cancel();
+                } else {
+                    String teleportMessage = MainConfig.messages.spawnTP()
+                            .replace("{prefix}", MainConfig.messages.prefix());
+                    player.teleport(spawnLocation);
+                    sendMessage(player, teleportMessage);
+                }
+            }, 20L * warmupTime);
+        } else {
+            String teleportMessage = MainConfig.messages.spawnTP()
+                    .replace("{prefix}", MainConfig.messages.prefix());
+            player.teleport(spawnLocation);
+            sendMessage(player, teleportMessage);
+        }
+
         return true;
     }
-
 }
